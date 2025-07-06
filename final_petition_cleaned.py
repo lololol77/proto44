@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 import uuid
 
-FIREBASE_URL = "https://project1-de377-default-rtdb.firebaseio.com/"
+FIREBASE_URL = ""https://project1-de377-default-rtdb.firebaseio.com/""
 
 # 사용자 고유 ID (세션 기반)
 def get_user_id():
