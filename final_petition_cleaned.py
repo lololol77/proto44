@@ -103,7 +103,6 @@ elif choice == "청원 목록":
     order_by = "likes" if order_option == "좋아요순" else "date"
     petitions = get_petitions(order_by=order_by)
     petitions = get_petitions(order_by=order_by)
-    st.write("🔥 petitions:", petitions) 
     user_id = get_user_id()
 
     for p in petitions:
