@@ -31,14 +31,24 @@ def add_petition(title, content, email):
 # 청원 목록 조회
 def get_petitions(order_by="date"):
     res = requests.get(f"{FIREBASE_URL}/petitions.json")
-    if res.ok and res.json():
-        data = res.json()
-        if order_by == "likes":
-            return sorted(data.values(), key=lambda x: (x.get("likes", 0), x.get("date", "")), reverse=True)
-        else:
-            return sorted(data.values(), key=lambda x: x.get("date", ""), reverse=True)
-    return []
+    
+    if not res.ok:
+        st.error("❌ Firebase에서 데이터를 불러오지 못했습니다.")
+        return []
 
+    data = res.json()
+    if not data:  # None 또는 {}인 경우
+        return []
+
+    try:
+        petitions = list(data.values())
+        if order_by == "likes":
+            return sorted(petitions, key=lambda x: (x.get("likes", 0), x.get("date", "")), reverse=True)
+        else:
+            return sorted(petitions, key=lambda x: x.get("date", ""), reverse=True)
+    except Exception as e:
+        st.error(f"❌ 데이터를 처리하는 중 오류 발생: {e}")
+        return []
 
 # 좋아요 처리
 def like_petition(petition, user_id):
