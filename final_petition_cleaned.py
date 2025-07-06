@@ -39,6 +39,7 @@ def get_petitions(order_by="date"):
             return sorted(data.values(), key=lambda x: x.get("date", ""), reverse=True)
     return []
 
+
 # 좋아요 처리
 def like_petition(petition, user_id):
     petition_id = petition["id"]
