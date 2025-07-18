@@ -1,4 +1,3 @@
-
 import streamlit as st
 import requests
 import pandas as pd
@@ -79,7 +78,7 @@ def get_petitions_csv():
 # Streamlit UI
 st.title("📢 동탄국제고 청원 시스템")
 
-menu = ["청원 작성", "청원 목록", "CSV 다운로드"]
+menu = ["청원 작성", "청원 목록", "CSV 다운로드", "청원 규정"]
 choice = st.sidebar.selectbox("메뉴 선택", menu)
 
 if choice == "청원 작성":
@@ -101,7 +100,6 @@ elif choice == "청원 목록":
 
     order_option = st.selectbox("정렬 기준", ["최신순", "좋아요순"])
     order_by = "likes" if order_option == "좋아요순" else "date"
-    petitions = get_petitions(order_by=order_by)
     petitions = get_petitions(order_by=order_by)
     user_id = get_user_id()
 
@@ -135,3 +133,43 @@ elif choice == "CSV 다운로드":
     st.header("⬇️ 전체 청원 데이터 다운로드")
     csv = get_petitions_csv()
     st.download_button("📄 CSV 다운로드", data=csv, file_name="petitions.csv", mime="text/csv")
+
+elif choice == "청원 규정":
+    st.header("📘 청원 규정 안내")
+    st.markdown("""
+안녕하세요. **동탄국제고등학교 학생자치회 소통부**입니다.  
+학생과 학생자치회 간의 소통 부재를 해결하기 위해 **'동탄국제고등학교 청원페이지'**를 개설하였습니다.  
+학생자치회는 학우 여러분과 소통하기 위해 노력하고 있습니다.  
+따끔한 조언, 학생회에 바라는 점, 궁금한 점, 학교에 바라는 점, 민원 사항 등 무엇이든 좋습니다.
+
+---
+
+**제보 제목 작성 가이드라인**:
+- 🏫 **학교 건의**: `(학교건의)`  
+- 👥 **자치회 건의**: `(자치회건의)`  
+- ❓ **궁금한 점**: `(궁금한점)`  
+- 💡 **아이디어 제안**: `(아이디어)`
+
+---
+
+**공개 및 심의 기준**:
+- 모든 제보는 **심의 기준에 어긋나지 않는 한** 공개됩니다.
+- **삭제 가능 사유**:
+    - 근거 없이 논란을 불러올 수 있는 제보
+    - 부적절한 언행 또는 타인 비방 내용
+- **정상 접수 시 처리 방식**:
+    - `(학교건의)` → 대의원회 논의 후 답변
+    - `(자치회건의)` → 부서 전달 혹은 대의원회 논의
+    - `(궁금한점)` 또는 `(아이디어)` → 바로 답변 또는 부서 전달
+
+---
+
+**다른 채널 이용 안내**:
+- 🏚️ **파손 시설 관련 제보**: [파손 시설 수리 시스템](https://forms.gle/YRoaJLhFTHdyBa8w8)
+- 🎋 **기타 자유 제보**: [동탄국제고 대나무숲](https://forms.gle/x9aJtPtwDymVNfSd8)
+
+---
+
+📌 상시로 확인하며, 수렴한 제보와 답변은 본 페이지를 통해 공유될 예정입니다.  
+많은 관심 부탁드립니다!
+""")
